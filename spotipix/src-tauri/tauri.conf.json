@@ -4,8 +4,7 @@
   "version": "0.1.0",
   "identifier": "com.ananya.spotipix",
   "build": {
-    "frontendDist": "../src",
-    "devPath": "http://localhost:1420"
+    "frontendDist": "../src"
   },
   "app": {
     "withGlobalTauri": true,
@@ -25,7 +24,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all",
+    "targets": ["all"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -37,17 +36,6 @@
   "plugins": {
     "shell": {
       "open": true
-    }
-  },
-  "env": {
-    "SPOTIFY_CLIENT_ID": "9d7d25f6b40146db8a5a78b054fd34fa",
-    "SPOTIFY_CLIENT_SECRET": "eb92c935ab194d5894bd68af09e98bf8",
-    "REDIRECT_URI": "spotipix://callback"
-  },
-  "protocol": {
-    "custom": {
-      "scheme": "spotipix",
-      "handler": "callback"
     }
   }
 }
