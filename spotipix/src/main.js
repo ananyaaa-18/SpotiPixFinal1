@@ -29,6 +29,27 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.appendChild(loginButton);
 });
 
+async function getCurrentSong() {
+  const token = localStorage.getItem("spotify_token");
+  if (!token) return console.log("https://api.spotify.com/v1/me/player/currently-playing", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    console.error("Error fetching track:", res.status);
+    return;
+  }
+
+  const data = await res.json();
+  if (data && data.item) {
+    document.getElementById("songTitle").textContent = data.item.name;
+    document.getElementById("artistName").textContent = data.item.artists[0].name;
+    document.getElementById("albumCover").src = data.item.album.images[0].url;
+  }
+}
+
 
 document.getElementById("playPauseBtn").addEventListener("click", () => {
   alert("Play/Pause clicked 🎵");

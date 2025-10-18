@@ -48,7 +48,8 @@
     "protocol": {
       "custom": [
         {
-          "name": "spotipix",
+          "scheme": "spotipix",
+          "handler": "callback"
     }]
 
       }
