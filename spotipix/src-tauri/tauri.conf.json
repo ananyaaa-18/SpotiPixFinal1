@@ -15,7 +15,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "spotipix",
+        "title": "SpotiPix 🎧",
         "url": "index.html",
         "width": 800,
         "height": 600
@@ -37,15 +37,20 @@
       "icons/icon.ico"
     ]
   },
-  "env": {
-  "SPOTIFY_CLIENT_ID": { "type": "string", "value": "9d7d25f6b40146db8a5a78b054fd34fa" },
-  "SPOTIFY_CLIENT_SECRET": { "type": "string", "value": "eb92c935ab194d5894bd68af09e98bf8" },
-  "REDIRECT_URI": { "type": "string", "value": "http://localhost:1420" }
-},
-"protocol": {
-    "custom": {
-      "scheme": "spotipix",
-      "handler": "callback"
+  "plugins": {},
+  "tauri": {
+    "security": {
+      "csp": null
+    },
+    "bundle": {
+      "identifier": "com.ananya.spotipix"
+    },
+    "protocol": {
+      "custom": [
+        {
+          "name": "spotipix",
+    }]
+
+      }
     }
-}
-}
+  }
