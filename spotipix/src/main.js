@@ -8,6 +8,27 @@ function loginWithSpotify() {
   window.open(authUrl, "_blank");
 }
 
+function handleAuthRedirect() {
+  const hash = window.location.hash;
+  if (hash.includes("access_token")) {
+    const token = new URLSearchParams(hash.substring(1)).get("access_token");
+    localStorage.setItem("spotify_token", token);
+    window.location.hash = "";
+    console.log("✅ Spotify token saved: ", token);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  handleAuthRedirect();
+
+  const loginButton = document.createElement("button");
+  loginButton.textContent = "Login with Spotify 🎧";
+  loginButton.classList.add("login-btn");
+  loginButton.onlick = loginWithSpotify;
+
+  document.body.appendChild(loginButton);
+});
+
 
 document.getElementById("playPauseBtn").addEventListener("click", () => {
   alert("Play/Pause clicked 🎵");
