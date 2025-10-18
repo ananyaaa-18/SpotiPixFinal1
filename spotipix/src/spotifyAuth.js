@@ -1,3 +1,8 @@
+import 'dotenv/config';
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const redirectUri = "spotipix://callback";
+
+
 const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID || "9d7d25f6b40146db8a5a78b054fd34fa";
 const redirectUri = "spotipix://callback";
 const scopes = [
@@ -7,7 +12,7 @@ const scopes = [
 ].join(" ");
 
 export function loginToSpotify() {
-    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}`;
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user-read-currently-playing%20user-read-playback-state`;
     window.location.href = authUrl;
 }
 
