@@ -6,11 +6,17 @@
   "build": {
     "frontendDist": "../src"
   },
+  "allowlist": {
+    "shell": {
+      "open": true
+    }
+  },
   "app": {
     "withGlobalTauri": true,
     "windows": [
       {
         "title": "spotipix",
+        "url": "index.html",
         "width": 800,
         "height": 600
       }
@@ -20,6 +26,7 @@
     }
   },
   "bundle": {
+    "identifier": "com.ananya.spotipix",
     "active": true,
     "targets": "all",
     "icon": [
@@ -34,5 +41,11 @@
   "SPOTIFY_CLIENT_ID": { "type": "string", "value": "9d7d25f6b40146db8a5a78b054fd34fa" },
   "SPOTIFY_CLIENT_SECRET": { "type": "string", "value": "eb92c935ab194d5894bd68af09e98bf8" },
   "REDIRECT_URI": { "type": "string", "value": "http://localhost:1420" }
+},
+"protocol": {
+    "custom": {
+      "scheme": "spotipix",
+      "handler": "callback"
+    }
 }
 }
