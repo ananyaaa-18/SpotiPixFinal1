@@ -1,3 +1,24 @@
+/*CSS Color Variables*/
+:root {
+  --navy: #2F4156;
+  --sky-blue: #C8D9E6;
+  --beige: #F5EFEB;
+  --azalea:#F7C9DA;
+  --pale-pink: #FFE1E6;
+  --light-blue: #C3E7F1;
+  --moonstone: #519CAB;
+  --saffron: #FFC64F;
+  --gun-metal: #20373B;
+  --lavender: #DABBE0;
+  --soft-sky: #BED1E3;
+  --flamingo: #EEBFD1;
+  --mauve: #ECAAC2;
+  --denim: #93AECA;
+  --lavender-blush: #FFE6ED;
+  --blush: #CF7486;
+}
+
+
 .logo.vanilla:hover {
   filter: drop-shadow(0 0 2em #ffe21c);
 }
