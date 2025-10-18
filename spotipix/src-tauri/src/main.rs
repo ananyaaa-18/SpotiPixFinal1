@@ -1,9 +1,5 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
+// Prevents additional console window on Windows in release
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-
-fn main() {
-    spotipix_lib::run()
-}
 
 use tauri::command;
 use reqwest::Client;
@@ -16,13 +12,15 @@ struct TokenResponse {
     token_type: String,
     expires_in: u32,
     refresh_token: Option<String>,
-    scope: String,
+    scope: Option<String>,
 }
 
 #[command]
 async fn get_spotify_tokens(code: String) -> Result<TokenResponse, String> {
-    let client_id = env::var("SPOTIFY_CLIENT_ID").unwrap_or_default();
-    let client_secret = env::var("SPOTIFY_CLIENT_SECRET").unwrap_or_default();
+    let client_id = env::var("SPOTIFY_CLIENT_ID")
+        .unwrap_or_else(|_| "9d7d25f6b40146db8a5a78b054fd34fa".to_string());
+    let client_secret = env::var("SPOTIFY_CLIENT_SECRET")
+        .unwrap_or_else(|_| "eb92c935ab194d5894bd68af09e98bf8".to_string());
     let redirect_uri = "spotipix://callback";
 
     let client = Client::new();
@@ -51,6 +49,5 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![get_spotify_tokens])
         .run(tauri::generate_context!())
-        .expect("error while running tauri app");
+        .expect("Error while running SpotiPix app");
 }
-
