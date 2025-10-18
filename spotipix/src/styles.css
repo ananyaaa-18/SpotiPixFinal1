@@ -83,7 +83,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.prev-btn :hover {
+.prev-btn:hover {
   background: var(--azalea);
   transform: scale(1.1);
   filter: drop-shadow(0 0 2em var(--lavender-blush));
@@ -99,7 +99,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.play-pause-btn :hover {
+.play-pause-btn:hover {
   background: var(--denim);
   transform: scale(1.1);
   filter: drop-shadow(0 0 2em var(--lavender-blush));
@@ -115,7 +115,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.next-btn :hover {
+.next-btn:hover {
   background: var(--soft-sky);
   transform: scale(1.1);
   filter: drop-shadow(0 0 2em var(--lavender-blush));
