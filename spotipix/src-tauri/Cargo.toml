@@ -15,6 +15,7 @@ name = "spotipix_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
+tauri = "2"
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
