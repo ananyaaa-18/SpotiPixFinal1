@@ -51,7 +51,7 @@ async function loadTrack(i) {
   const t = tracks[currentIndex];
   titleEl.textContent = t.name || 'Unknown';
   artistEl.textContent = t.artist || '';
-  coverEl.src = t.image || 'assets/default-cover.jpg';
+  coverEl.src = t.image || 'assets/default-cover.gif';
   audio.src = t.src;
   localStorage.setItem('lastTrack', currentIndex);
 
