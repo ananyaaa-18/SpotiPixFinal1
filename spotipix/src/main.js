@@ -31,3 +31,5 @@ document.getElementById("nextBtn").addEventListener("click", () => {
 document.getElementById("prevBtn").addEventListener("click", () => {
   alert("Previous ⏮️");
 });
+
+document.getElementById("loginBtn").addEventListener("click", loginWithSpotify);
