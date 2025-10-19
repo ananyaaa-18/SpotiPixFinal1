@@ -33,3 +33,27 @@ document.getElementById("prevBtn").addEventListener("click", () => {
 });
 
 document.getElementById("loginBtn").addEventListener("click", loginWithSpotify);
+
+import { invoke } from "@tauri-apps/api";
+
+async function fetchProfile() {
+  const token = localStorage.getItem("spotify_access_token");
+  if (!token) {
+    alert("Please login to Spotify first 🎧");
+    return;
+  }
+
+  try {
+    const profile = await invoke("get_spotify_profile", { access_token: token });
+    console.log("Spotify Profile:", profile);
+    alert(`Logged in as: ${profile.display_name} ✅`);
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+    alert("Failed to fetch profile ❌");
+  }
+}
+
+// Temporarily run this automatically after login to test:
+window.__TAURI__.event.listen("spotify_tokens_received", async () => {
+  await fetchProfile();
+});

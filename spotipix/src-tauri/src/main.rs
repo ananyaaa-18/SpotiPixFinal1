@@ -25,8 +25,10 @@ async fn main() {
             });
             Ok(())
         })
+        .invoke_handler(tauri::generate_handler![get_spotify_profile])
         .run(tauri::generate_context!())
         .expect("error while running tauri app");
+
 }
 
 async fn start_local_server(app_handle: tauri::AppHandle) {
