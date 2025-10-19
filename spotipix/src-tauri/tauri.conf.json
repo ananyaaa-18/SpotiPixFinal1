@@ -18,6 +18,9 @@
         "fullscreen": false
       }
     ],
+    "allowlist": {
+      "all": true
+    },
     "security": {
       "csp": null
     },

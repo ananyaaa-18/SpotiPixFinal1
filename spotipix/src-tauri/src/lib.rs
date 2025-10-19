@@ -1,5 +1,5 @@
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 use tauri::api::shell;
+use tauri::Manager;
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -7,8 +7,8 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn open_url(url: &str) -> Result<(), String> {
-    shell::open(&shell::Scope::default(), url.to_string(), None)
+fn open_url(window: tauri::Window, url: &str) -> Result<(), String> {
+    shell::open(&window.shell_scope(), url.to_string(), None)
         .map_err(|e| e.to_string())
 }
 
@@ -19,3 +19,5 @@ pub fn run() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+
+
