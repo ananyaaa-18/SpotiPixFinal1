@@ -38,6 +38,6 @@
     "core:app:default",
     "core:window:default",
     "core:shell:allow-open"
-  ]
-}
+  ] 
 
+}
