@@ -1,4 +1,4 @@
-#![cfg_attr(not(debug_assertions), windows_subsytem = "windows")]
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use serde::{Deserialize, Serialize};
 use std::env;
@@ -7,7 +7,6 @@ use tokio::sync::Mutex;
 use std::sync::Arc;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-
 pub struct TokenResponse {
     access_token: String,
     token_type: String,
@@ -17,17 +16,17 @@ pub struct TokenResponse {
 }
 
 #[tokio::main]
-
 async fn main() {
-    tauri::Builder::default().setup(|app| {
-        let handle = app.handle();
-        tauri::async_runtime::spawn(async move {
-            start_local_server(handle).await;
-        });
-        ok(())
-    })
-    .run(tauri::generate_context!())
-    .expect("error while running tauri app");
+    tauri::Builder::default()
+        .setup(|app| {
+            let handle = app.handle();
+            tauri::async_runtime::spawn(async move {
+                start_local_server(handle).await;
+            });
+            Ok(())
+        })
+        .run(tauri::generate_context!())
+        .expect("error while running tauri app");
 }
 
 async fn start_local_server(app_handle: tauri::AppHandle) {
@@ -49,10 +48,9 @@ async fn start_local_server(app_handle: tauri::AppHandle) {
             ));
 
             if let Ok(tokens) = exchange_code_for_token(code).await {
-                println("✅ Tokens received: {:?}", tokens);
+                println!("✅ Tokens received: {:?}", tokens);
 
                 let _ = app_handle.emit_all("spotify_tokens_received", tokens);
-
             }
         } else {
             let _ = request.respond(Response::from_string("404 - Not found"));
@@ -84,7 +82,6 @@ async fn exchange_code_for_token(code: String) -> Result<TokenResponse, String> 
 
     if !res.status().is_success() {
         return Err(format!("Spotify token request failed: {}", res.status()));
-
     }
 
     let tokens: TokenResponse = res.json().await.map_err(|e| e.to_string())?;
