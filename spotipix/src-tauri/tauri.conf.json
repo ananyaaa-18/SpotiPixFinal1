@@ -5,6 +5,8 @@
     "version": "0.1.0"
   },
   "build": {
+    "beforeBuildCommand": "",
+    "beforeDevCommand": "",
     "devPath": "../src",
     "distDir": "../src"
   },

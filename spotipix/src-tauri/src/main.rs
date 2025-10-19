@@ -3,8 +3,8 @@
 use serde::{Deserialize, Serialize};
 use std::env;
 use tauri::Manager;
-use tokio::sync::Mutex;
-use std::sync::Arc;
+use tiny_http::{Response, Server};
+use reqwest::Client;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct TokenResponse {
@@ -17,6 +17,7 @@ pub struct TokenResponse {
 
 #[tokio::main]
 async fn main() {
+    dotenv::dotenv().ok();
     tauri::Builder::default()
         .setup(|app| {
             let handle = app.handle();
@@ -28,13 +29,9 @@ async fn main() {
         .invoke_handler(tauri::generate_handler![get_spotify_profile])
         .run(tauri::generate_context!())
         .expect("error while running tauri app");
-
 }
 
 async fn start_local_server(app_handle: tauri::AppHandle) {
-    use tiny_http::{Response, Server};
-    use reqwest::Client;
-
     let server = Server::http("127.0.0.1:1420").expect("Failed to start local server");
 
     println!("🚀 Listening on http://127.0.0.1:1420");
@@ -51,7 +48,6 @@ async fn start_local_server(app_handle: tauri::AppHandle) {
 
             if let Ok(tokens) = exchange_code_for_token(code).await {
                 println!("✅ Tokens received: {:?}", tokens);
-
                 let _ = app_handle.emit_all("spotify_tokens_received", tokens);
             }
         } else {
@@ -61,7 +57,6 @@ async fn start_local_server(app_handle: tauri::AppHandle) {
 }
 
 async fn exchange_code_for_token(code: String) -> Result<TokenResponse, String> {
-    use reqwest::Client;
     let client_id = env::var("SPOTIFY_CLIENT_ID").unwrap_or_default();
     let client_secret = env::var("SPOTIFY_CLIENT_SECRET").unwrap_or_default();
     let redirect_uri = "http://127.0.0.1:1420/callback";
@@ -92,7 +87,7 @@ async fn exchange_code_for_token(code: String) -> Result<TokenResponse, String> 
 
 #[tauri::command]
 async fn get_spotify_profile(access_token: String) -> Result<serde_json::Value, String> {
-    let client = reqwest::Client::new();
+    let client = Client::new();
     let res = client
         .get("https://api.spotify.com/v1/me")
         .bearer_auth(access_token)
