@@ -87,3 +87,23 @@ async fn exchange_code_for_token(code: String) -> Result<TokenResponse, String> 
     let tokens: TokenResponse = res.json().await.map_err(|e| e.to_string())?;
     Ok(tokens)
 }
+
+#[tauri::command]
+async fn get_spotify_profile(access_token: String) -> Result<serde_json::Value, String> {
+    let client = reqwest::Client::new();
+    let res = client
+        .get("https://api.spotify.com/v1/me")
+        .bearer_auth(access_token)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
+
+    if res.status().is_success() {
+        let json = res.json::<serde_json::Value>()
+            .await
+            .map_err(|e| e.to_string())?;
+        Ok(json)
+    } else {
+        Err(format!("Spotify API error: {}", res.status()))
+    }
+}

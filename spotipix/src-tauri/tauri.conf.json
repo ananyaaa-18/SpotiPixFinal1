@@ -32,11 +32,5 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
-  },
-  "plugins": {
-    "core": {
-      "window": { "default": true },
-      "http": { "default": true }
-   }
-}
+  }
 }
