@@ -20,11 +20,23 @@ let isPlaying = false;
 let inMenu = false;
 let selectedIndex = 0;
 
-// Load your songs (example)
 tracks = [
   { name: "Touch", artist: "Katseye ft. Yeonjun", src: "assets/touch/Touch - KATSEYE.mp3", image: "assets/touch/katseye.jpg" },
   { name: "Supernatural", artist: "Ariana Grande", src: "assets/Supernatural/wwd.mp3juice.blog - Ariana Grande - supernatural (320 KBps).mp3", image: "assets/Supernatural/ariana.jpg" },
   { name: "Party 4 u", artist: "Charli xcx", src: "assets/party4u/Charli XCX - party 4 u [Official Audio].mp3", image: "assets/party4u/charli.jpg" },
+  { name: "Eyes Closed", artist: "Jisoo & Zayn", src: "assets/eyes closed/EYES CLOSED.mp3", image: "assets/eyes closed/jisoo-zayn.jpg"},
+  { name: "Blue", artist: "Yung Kai", src: "assets/blue/Blue-Yung-Kai.mp3", image: "assets/blue/yung kai.jpg"},
+  { name: "About You", artist: "The 1975", src: "assets/About You/The 1975 - About You (Official) - nabila.mp3", image: "assets/About You/1975.jpg"},
+  { name: "2 hands", artist: "Tate Mcrae", src: "assets/2 hands/tate-mcrae-2-hands.mp3", image: "assets/2 hands/tate.jpg"},
+  { name: "If I Say, I Love You", artist: "Boynextdoor", src: "assets/if I say I love you/IF I SAY, I LOVE YOU.mp3", image: "assets/if I say I love you/boynextdoor.jpg"},
+  { name: "Kiss Kiss", artist: "MGK", src: "assets/kiss kiss/Kiss Kiss.mp3", image: "assets/kiss kiss/mgk.jpg"},
+  { name: "GO!", artist: "Cortis", src: "assets/GO!/GO!.mp3", image: "assets/GO!/cortis.jpg"},
+  { name: "luther", artist: "Kendrick & Sza", src: "assets/luther/Luther by Kendrick Lamar and Sza.mp3", image: "assets/luther/sza&kendrick.jpg"},
+  { name: "playboy shit", artist: "Blackbear ft. Lil Aaron", src: "assets/playboy shit/playboyshit-blackbear.mp3", image: "assets/playboy shit/blackbearr.jpg"},
+  { name: "I Love You, I'm Sorry", artist: "Gracie Abrams", src: "assets/i love you im sorry/I Love You, I'm Sorry.mp3", image: "assets/i love you im sorry/gracie.jpg"},
+  { name: "Jellyous", artist: "ILLIT", src: "assets/jellyous/jellyous.mp3", image: "assets/jellyous/illit.jpg"},
+  { name: "Fall In Love Again", artist: "P1harmony", src: "assets/fall in love again/Fall In Love Again.mp3", image: "assets/fall in love again/p1h.jpg"},
+  { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/I think i like u better when youre gone/I Think I Like You Better When You’re Gone.mp3", image: "assets/I think i like u better when youre gone/reneee.jpg"}
 ];
 
 // Load track
