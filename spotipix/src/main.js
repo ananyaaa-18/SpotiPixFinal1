@@ -6,35 +6,12 @@ const SCOPES = [
   "user-modify-playback-state"
 ].join(" ");
 
-function loginWithSpotify() {
+window.loginWithSpotify = function () {
   const authUrl = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}`;
-
   window.open(authUrl, "_blank");
-}
+};
 
-window.__TAURI__.event.listen("spotify_tokens_received", (event) => {
-  const tokens = event.payload;
-  console.log("✅ Received tokens:", tokens);
-  localStorage.setItem("spotify_access_token", tokens.access_token);
-  localStorage.setItem("spotify_refresh_token", tokens.refresh_token || "");
-  alert("Spotify login successful! 🌿");
-});
-
-document.getElementById("playPauseBtn").addEventListener("click", () => {
-  alert("Play/Pause clicked 🎵");
-});
-
-document.getElementById("nextBtn").addEventListener("click", () => {
-  alert("Next ⏭️");
-});
-
-document.getElementById("prevBtn").addEventListener("click", () => {
-  alert("Previous ⏮️");
-});
-
-document.getElementById("loginBtn").addEventListener("click", loginWithSpotify);
-
-import { invoke } from "@tauri-apps/api";
+const { invoke } = window.__TAURI__.tauri;
 
 async function fetchProfile() {
   const token = localStorage.getItem("spotify_access_token");
@@ -53,7 +30,6 @@ async function fetchProfile() {
   }
 }
 
-// Temporarily run this automatically after login to test:
 window.__TAURI__.event.listen("spotify_tokens_received", async () => {
   await fetchProfile();
 });
