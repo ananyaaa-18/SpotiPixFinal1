@@ -39,7 +39,7 @@ tracks = [
   { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/I think i like u better when youre gone/I Think I Like You Better When You’re Gone.mp3", image: "assets/I think i like u better when youre gone/reneee.jpg"}
 ];
 
-// Load track
+
 function loadTrack(i) {
   currentIndex = ((i % tracks.length) + tracks.length) % tracks.length;
   const t = tracks[currentIndex];
@@ -50,7 +50,7 @@ function loadTrack(i) {
   highlightMenu(currentIndex);
 }
 
-// Play/pause toggle
+
 function togglePlay() {
   if (!audio.src) loadTrack(currentIndex);
   if (isPlaying) {
@@ -63,7 +63,7 @@ function togglePlay() {
   isPlaying = !isPlaying;
 }
 
-// Track navigation
+
 function nextTrack() {
   loadTrack(currentIndex + 1);
   if (isPlaying) audio.play();
@@ -73,7 +73,7 @@ function prevTrack() {
   if (isPlaying) audio.play();
 }
 
-// Progress bar updates
+
 audio.addEventListener('timeupdate', () => {
   if (!audio.duration) return;
   const pct = (audio.currentTime / audio.duration) * 100;
@@ -90,7 +90,7 @@ function fmtTime(sec) {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-// Menu
+
 function toggleMenu() {
   inMenu = !inMenu;
   menuScreen.classList.toggle('hidden', !inMenu);
@@ -98,7 +98,7 @@ function toggleMenu() {
 }
 menuBtn.addEventListener('click', toggleMenu);
 
-// Build track list
+
 tracks.forEach((t, i) => {
   const li = document.createElement('li');
   li.textContent = `${t.name} — ${t.artist}`;
@@ -118,7 +118,7 @@ function highlightMenu(i) {
   });
 }
 
-// Scroll wheel rotation detection
+
 let lastAngle = null;
 let isDraggingWheel = false;
 
@@ -171,11 +171,11 @@ wheel.addEventListener('touchstart', (e) => { if (inMenu) isDraggingWheel = true
 wheel.addEventListener('touchmove', onWheelMove);
 wheel.addEventListener('touchend', endWheel);
 
-// Wheel buttons
+
 playBtn.addEventListener('click', togglePlay);
 nextBtn.addEventListener('click', nextTrack);
 prevBtn.addEventListener('click', prevTrack);
 
-// Init
+
 loadTrack(0);
 highlightMenu(0);
