@@ -1,53 +1,92 @@
-// Prevents additional console window on Windows in release
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+#![cfg_attr(not(debug_assertions), windows_subsytem = "windows")]
 
-use tauri::command;
-use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::env;
+use tauri::Manager;
+use tokio::sync::Mutex;
+use std::sync::Arc;
 
-#[derive(Serialize, Deserialize)]
-struct TokenResponse {
+#[derive(Serialize, Deserialize, Debug, Clone)]
+
+pub struct TokenResponse {
     access_token: String,
     token_type: String,
-    expires_in: u32,
+    expires_in: u64,
     refresh_token: Option<String>,
     scope: Option<String>,
 }
 
-#[command]
-async fn get_spotify_tokens(code: String) -> Result<TokenResponse, String> {
-    let client_id = env::var("SPOTIFY_CLIENT_ID")
-        .unwrap_or_else(|_| "9d7d25f6b40146db8a5a78b054fd34fa".to_string());
-    let client_secret = env::var("SPOTIFY_CLIENT_SECRET")
-        .unwrap_or_else(|_| "eb92c935ab194d5894bd68af09e98bf8".to_string());
-    let redirect_uri = "spotipix://callback";
+#[tokio::main]
+
+async fn main() {
+    tauri::Builder::default().setup(|app| {
+        let handle = app.handle();
+        tauri::async_runtime::spawn(async move {
+            start_local_server(handle).await;
+        });
+        ok(())
+    })
+    .run(tauri::generate_context!())
+    .expect("error while running tauri app");
+}
+
+async fn start_local_server(app_handle: tauri::AppHandle) {
+    use tiny_http::{Response, Server};
+    use reqwest::Client;
+
+    let server = Server::http("127.0.0.1:1420").expect("Failed to start local server");
+
+    println!("🚀 Listening on http://127.0.0.1:1420");
+
+    for request in server.incoming_requests() {
+        let url = request.url().to_string();
+
+        if url.starts_with("/callback?code=") {
+            let code = url.trim_start_matches("/callback?code=").to_string();
+
+            let _ = request.respond(Response::from_string(
+                "<h2>✅ Spotify login successful! You can close this window.</h2>",
+            ));
+
+            if let Ok(tokens) = exchange_code_for_token(code).await {
+                println("✅ Tokens received: {:?}", tokens);
+
+                let _ = app_handle.emit_all("spotify_tokens_received", tokens);
+
+            }
+        } else {
+            let _ = request.respond(Response::from_string("404 - Not found"));
+        }
+    }
+}
+
+async fn exchange_code_for_token(code: String) -> Result<TokenResponse, String> {
+    use reqwest::Client;
+    let client_id = env::var("SPOTIFY_CLIENT_ID").unwrap_or_default();
+    let client_secret = env::var("SPOTIFY_CLIENT_SECRET").unwrap_or_default();
+    let redirect_uri = "http://127.0.0.1:1420/callback";
+
+    let params = [
+        ("grant_type", "authorization_code"),
+        ("code", &code),
+        ("redirect_uri", redirect_uri),
+        ("client_id", &client_id),
+        ("client_secret", &client_secret),
+    ];
 
     let client = Client::new();
     let res = client
         .post("https://accounts.spotify.com/api/token")
-        .form(&[
-            ("grant_type", "authorization_code"),
-            ("code", &code),
-            ("redirect_uri", redirect_uri),
-            ("client_id", &client_id),
-            ("client_secret", &client_secret),
-        ])
+        .form(&params)
         .send()
         .await
         .map_err(|e| e.to_string())?;
 
-    if res.status().is_success() {
-        let tokens: TokenResponse = res.json().await.map_err(|e| e.to_string())?;
-        Ok(tokens)
-    } else {
-        Err(format!("Spotify token request failed: {}", res.status()))
-    }
-}
+    if !res.status().is_success() {
+        return Err(format!("Spotify token request failed: {}", res.status()));
 
-fn main() {
-    tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_spotify_tokens])
-        .run(tauri::generate_context!())
-        .expect("Error while running SpotiPix app");
+    }
+
+    let tokens: TokenResponse = res.json().await.map_err(|e| e.to_string())?;
+    Ok(tokens)
 }
