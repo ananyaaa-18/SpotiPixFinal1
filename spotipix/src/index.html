@@ -4,27 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SpotiPix 🎧</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Bubblegum+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
+    <div class="shell">
+      <div class="screen">
+        <div class="screen-inner">
+          <div class="info-left">
+            <img id="cover" class="cover" src="assets/default-cover.jpg" alt="album cover">
+          </div>
 
-    <button id="loginBtn" class="login-btn">Login with Spotify 🎧</button>
 
-    <div class="widget-container">
-      <div class="album-art">
-        <img id="albumCover" src="default-art.png" alt="Album Art"/>
-      </div>
+          <div class="info-right">
+            <div class="track-meta">
+              <div id="title" class="title">Loading.....</div>
+              <div id="artist" class="artist">-----</div>
+          </div>
+          
+          <div class="time-row">
+            <div id="currentTime">0:00</div>
+            <div id="duration">0:00</div>
+          </div>
 
-      <div class="song-info">
-        <h3 id="songTitle" class="song-title">Song Title</h3>
-        <p id="artistName" class="artist-name">Artist Name</p>
-      </div>
+          <div class="progress-wrap">
+            <div id="progressBar" class="progress-bar">
+              <div id="progressFill" class="progress-fill"></div>
+              <div id="progressThumb" class="thumb" draggable="false"></div>
+            </div>
+          </div>
 
-      <div class="controls">
-        <button id="prevBtn" class="prev-btn">⏮️</button>
-        <button id="playPauseBtn" class="play-pause-btn">▶️</button>
-        <button id="nextBtn" class="next-btn">⏩️</button>
+          <div class="controls-row small">
+            <button id="toggleWave" class="small-btn">Waveform</button>
+            <div class="hearts-inline">
+              <button class="heart small-btn" data-vol="0.3">💗</button>
+              <button class="heart small-btn" data-vol="0.6">💝</button>
+              <button class="heart small-btn" data-vol="0.9">💖</button>
+            </div>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
 
