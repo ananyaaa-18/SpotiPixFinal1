@@ -252,6 +252,47 @@ html,body {
   cursor: pointer;
 }
 
+.menu-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #fff, #f8f8f8);
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  padding: 16px;
+  font-family: "Poppins", sans-serif;
+  transition: opactiy 0.3s;
+}
+
+.menu-screen ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-screen li {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--gun-metal);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.menu-screen li:hover,
+.menu-screen li.active {
+  background: var(--pale-pink);
+  border-radius: 6px;
+  transform: translateX(4px);
+}
+
+.hidden {
+  display: none;
+}
+
 @media (max-width: 900px) {
   .shell{
     height: auto;
