@@ -34,9 +34,9 @@
     ]
   },
   "plugins": {
-  "core": {
-    "window": { "default": true },
-    "http": { "default": true }
-  }
+    "core": {
+      "window": { "default": true },
+      "http": { "default": true }
+   }
 }
 }
