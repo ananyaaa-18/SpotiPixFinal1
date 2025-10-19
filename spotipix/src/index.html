@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SpotiPix 🎧</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Bubblegum+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cozy KPop Instrumental Player</title>
 
-  <body>
-    <div class="shell">
-      <div class="screen">
-        <div class="screen-inner">
-          <div class="info-left">
-            <img id="cover" class="cover" src="assets/default-cover.jpg" alt="album cover">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Bubblegum+Sans&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="shell">
+    <div class="screen">
+      <div class="screen-inner">
+        <div class="info-left">
+          <img id="cover" class="cover" src="assets/default-cover.jpg" alt="cover">
+        </div>
+        <div class="info-right">
+          <div class="track-meta">
+            <div id="title" class="title">Loading…</div>
+            <div id="artist" class="artist">—</div>
           </div>
 
-
-          <div class="info-right">
-            <div class="track-meta">
-              <div id="title" class="title">Loading.....</div>
-              <div id="artist" class="artist">-----</div>
-          </div>
-          
           <div class="time-row">
             <div id="currentTime">0:00</div>
             <div id="duration">0:00</div>
@@ -44,11 +43,34 @@
               <button class="heart small-btn" data-vol="0.9">💖</button>
             </div>
           </div>
-          </div>
+        </div>
+      </div>
+
+      <!-- Waveform (hidden by default) -->
+      <div id="waveContainer" class="wave-container hidden">
+        <canvas id="waveform"></canvas>
+      </div>
+    </div>
+
+    <!-- Click Wheel -->
+    <div class="wheel-wrap">
+      <div class="wheel">
+        <div class="wheel-top">MUSIC</div>
+
+        <button id="prev" class="wheel-btn left">◀</button>
+        <button id="next" class="wheel-btn right">▶</button>
+
+        <button id="play" class="wheel-center">▶️</button>
+
+        <div class="wheel-bottom">
+          <button id="menu" class="menu-btn">MENU</button>
         </div>
       </div>
     </div>
 
-    <script type="module" src="main.js"></script>
-  </body>
+    <audio id="audio" preload="metadata"></audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
