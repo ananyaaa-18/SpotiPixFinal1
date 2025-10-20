@@ -30,14 +30,14 @@ tracks = [
   { name: "Jellyous", artist: "ILLIT", src: "assets/jellyous/jellyous.mp3", image: "assets/jellyous/illit.jpg"},
   { name: "Fall In Love Again", artist: "P1harmony", src: "assets/fall in love again/Fall In Love Again.mp3", image: "assets/fall in love again/p1h.jpg"},
   { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/I think i like u better when youre gone/I Think I Like You Better When You’re Gone.mp3", image: "assets/I think i like u better when youre gone/reneee.jpg"},
-  { name: "Soda Pop", artist: "Saja Boys", src: "", image: ""  },
-  { name: "Welcome To New York", artist: "Taylor Swift", src: "", image: ""},
-  { name: "Golden", artist: "HUNTR/X", src: "", image: ""},
-  { name: "So American", artist: "Olivia Rodrigo", src: "", image: ""},
-  { name: "Emails I Can't Send", artist: "Sabrina Carpenter", src:"", image:""},
-  { name: "Hurt", artist: "NewJeans / NJZ", src: "", image: ""},
-  { name: "Never Goodbye", artist: "NCT Dream", src: "", image: ""},
-  { name: "DARARI", artist: "Treasure", src: "", image: ""}
+  { name: "Soda Pop", artist: "Saja Boys", src: "assets/soda/Soda Pop.mp3", image: "assets/soda/saja.jpg"  },
+  { name: "Welcome To New York", artist: "Taylor Swift", src: "assets/wlcm/Taylor Swift-Welcome To New York.mp3", image: "assets/wlcm/Taylor Swift-Welcome To New York.mp3"},
+  { name: "Golden", artist: "HUNTR/X", src: "assets/golden/Golden.mp3", image: "assets/golden/huntrix.jpg"},
+  { name: "So American", artist: "Olivia Rodrigo", src: "assets/american/so american (Explicit).mp3", image: "assets/american/olivia.jpg"},
+  { name: "Emails I Can't Send", artist: "Sabrina Carpenter", src:"assets/emails/emails i can’t send (Explicit).mp3", image:"assets/emails/sabrina.jpg"},
+  { name: "Hurt", artist: "NewJeans / NJZ", src: "assets/hurt/Hurt.mp3", image: "assets/hurt/njz.jpg"},
+  { name: "Never Goodbye", artist: "NCT Dream", src: "assets/never goobye/Never Goodbye.mp3", image: "assets/never goobye/nct.jpg"},
+  { name: "DARARI", artist: "Treasure", src: "assets/darari/DARARI.mp3", image: "assets/darari/treasure.jpg"}
 ];
 
 
