@@ -29,7 +29,15 @@ tracks = [
   { name: "I Love You, I'm Sorry", artist: "Gracie Abrams", src: "assets/i love you im sorry/I Love You, I'm Sorry.mp3", image: "assets/i love you im sorry/gracie.jpg"},
   { name: "Jellyous", artist: "ILLIT", src: "assets/jellyous/jellyous.mp3", image: "assets/jellyous/illit.jpg"},
   { name: "Fall In Love Again", artist: "P1harmony", src: "assets/fall in love again/Fall In Love Again.mp3", image: "assets/fall in love again/p1h.jpg"},
-  { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/I think i like u better when youre gone/I Think I Like You Better When You’re Gone.mp3", image: "assets/I think i like u better when youre gone/reneee.jpg"}
+  { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/I think i like u better when youre gone/I Think I Like You Better When You’re Gone.mp3", image: "assets/I think i like u better when youre gone/reneee.jpg"},
+  { name: "Soda Pop", artist: "Saja Boys", src: "", image: ""  },
+  { name: "Welcome To New York", artist: "Taylor Swift", src: "", image: ""},
+  { name: "Golden", artist: "HUNTR/X", src: "", image: ""},
+  { name: "So American", artist: "Olivia Rodrigo", src: "", image: ""},
+  { name: "Emails I Can't Send", artist: "Sabrina Carpenter", src:"", image:""},
+  { name: "Hurt", artist: "NewJeans / NJZ", src: "", image: ""},
+  { name: "Never Goodbye", artist: "NCT Dream", src: "", image: ""},
+  { name: "DARARI", artist: "Treasure", src: "", image: ""}
 ];
 
 
