@@ -8,10 +8,13 @@ const prevBtn = document.getElementById('prev');
 const progressFill = document.getElementById('progressFill');
 const currentTimeEl = document.getElementById('currentTime');
 const durationEl = document.getElementById('duration');
-const dropdown = document.getElementById('menuList');
+const dropdown = document.getElementById('menuList') || document.getElementById('menuList'); // keep compatibility
 
-let currentIndex = 0;
-let isPlaying = false;
+if (!audio) console.error('Audio element #audio not found');
+if (!playBtn) console.error('Play button #play not found');
+if (!nextBtn) console.error('Next button #next not found');
+if (!prevBtn) console.error('Prev button #prev not found');
+if (!progressFill) console.error('Progress fill #progressFill not found');
 
 tracks = [
   { name: "Touch", artist: "Katseye ft. Yeonjun", src: "assets/touch/Touch - KATSEYE.mp3", image: "assets/touch/katseye.jpg" },
@@ -41,67 +44,174 @@ tracks = [
 ];
 
 
-tracks.forEach((t, i) => {
-  const opt = document.createElement('option');
-  opt.value = i;
-  opt.textContent = `${t.name} — ${t.artist}`;
-  dropdown.appendChild(opt);
-});
+let currentIndex = 0;
+let isPlaying = false;
 
-function loadTrack(i) {
-  currentIndex = i;
-  const t = tracks[currentIndex];
-  audio.src = t.src;
-  titleEl.textContent = t.name;
-  artistEl.textContent = t.artist;
-  coverEl.src = t.image;
-  dropdown.value = currentIndex;
+// populate dropdown safely
+if (dropdown) {
+  tracks.forEach((t, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${t.name} — ${t.artist}`;
+    dropdown.appendChild(opt);
+  });
+} else {
+  console.warn('Dropdown menu element not found; skipping population');
 }
 
-function togglePlay() {
-  if (!audio.src) loadTrack(0);
-  if (isPlaying) {
-    audio.pause();
-    playBtn.textContent = '▶️';
-  } else {
-    audio.play();
-    playBtn.textContent = '⏸️';
-  }
-  isPlaying = !isPlaying;
-}
-
-function nextTrack() {
-  loadTrack((currentIndex + 1) % tracks.length);
-  if (isPlaying) audio.play();
-}
-function prevTrack() {
-  loadTrack((currentIndex - 1 + tracks.length) % tracks.length);
-  if (isPlaying) audio.play();
-}
-
-dropdown.addEventListener('change', e => {
-  loadTrack(parseInt(e.target.value));
-  if (isPlaying) audio.play();
-});
-
-audio.addEventListener('timeupdate', () => {
-  if (!audio.duration) return;
-  const pct = (audio.currentTime / audio.duration) * 100;
-  progressFill.style.width = pct + '%';
-  currentTimeEl.textContent = fmtTime(audio.currentTime);
-  durationEl.textContent = fmtTime(audio.duration);
-});
-audio.addEventListener('ended', nextTrack);
-
+// helper: format mm:ss
 function fmtTime(sec) {
-  if (isNaN(sec)) return '0:00';
+  if (!sec || isNaN(sec)) return '0:00';
   const m = Math.floor(sec / 60);
   const s = Math.floor(sec % 60);
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-playBtn.addEventListener('click', togglePlay);
-nextBtn.addEventListener('click', nextTrack);
-prevBtn.addEventListener('click', prevTrack);
+// Load a track index and update UI (no play)
+function loadTrack(i) {
+  if (!tracks || !tracks.length) {
+    console.warn('No tracks available');
+    return;
+  }
+  currentIndex = ((i % tracks.length) + tracks.length) % tracks.length;
+  const t = tracks[currentIndex];
+  titleEl && (titleEl.textContent = t.name || 'Unknown');
+  artistEl && (artistEl.textContent = t.artist || '');
+  coverEl && (coverEl.src = t.image || 'assets/default-cover.gif');
 
+  // set audio src and ensure metadata loads
+  if (audio) {
+    audio.src = t.src || '';
+    try { audio.load(); } catch (e) { console.warn('audio.load() error', e); }
+  }
+
+  // sync dropdown
+  if (dropdown) dropdown.value = currentIndex;
+}
+
+// Safe play helper with promise handling (autoplay policy)
+async function safePlay() {
+  if (!audio) return false;
+  if (!audio.src) {
+    loadTrack(currentIndex || 0);
+  }
+  try {
+    const playPromise = audio.play();
+    if (playPromise !== undefined) await playPromise;
+    isPlaying = true;
+    if (playBtn) playBtn.textContent = '⏸️';
+    return true;
+  } catch (err) {
+    console.warn('Playback blocked or failed, user gesture required:', err);
+    alert('Playback blocked by browser. Please click the play button again or interact with the app to allow sound.');
+    isPlaying = false;
+    if (playBtn) playBtn.textContent = '▶️';
+    return false;
+  }
+}
+
+// toggle play/pause
+async function togglePlay() {
+  if (!audio) return;
+  if (!audio.src) loadTrack(currentIndex || 0);
+  if (isPlaying) {
+    audio.pause();
+    isPlaying = false;
+    if (playBtn) playBtn.textContent = '▶️';
+  } else {
+    await safePlay();
+  }
+}
+
+// next / prev functions
+async function nextTrack() {
+  loadTrack((currentIndex + 1) % tracks.length);
+  if (isPlaying) await safePlay();
+}
+async function prevTrack() {
+  loadTrack((currentIndex - 1 + tracks.length) % tracks.length);
+  if (isPlaying) await safePlay();
+}
+
+// dropdown change
+if (dropdown) {
+  dropdown.addEventListener('change', async (e) => {
+    const val = parseInt(e.target.value, 10);
+    if (Number.isInteger(val)) {
+      loadTrack(val);
+      if (isPlaying) await safePlay();
+    }
+  });
+}
+
+// progress updates
+if (audio) {
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration || isNaN(audio.duration)) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (currentTimeEl) currentTimeEl.textContent = fmtTime(audio.currentTime);
+    if (durationEl) durationEl.textContent = fmtTime(audio.duration);
+  });
+
+  audio.addEventListener('ended', () => {
+    // automatically advance
+    nextTrack();
+  });
+
+  audio.addEventListener('loadedmetadata', () => {
+    // Update duration right away
+    if (durationEl && audio.duration) durationEl.textContent = fmtTime(audio.duration);
+  });
+
+  audio.addEventListener('error', (e) => {
+    console.error('Audio element error:', e);
+    alert('Error loading audio file. Check that the file paths in the tracks array are correct.');
+  });
+}
+
+// UI listeners (guarded)
+if (playBtn) playBtn.addEventListener('click', togglePlay);
+if (nextBtn) nextBtn.addEventListener('click', nextTrack);
+if (prevBtn) prevBtn.addEventListener('click', prevTrack);
+
+// keyboard shortcuts (optional — space toggles)
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    togglePlay();
+  } else if (e.code === 'ArrowRight') {
+    nextTrack();
+  } else if (e.code === 'ArrowLeft') {
+    prevTrack();
+  }
+});
+
+// Prime AudioContext on first user gesture to reduce chance of blocked play
+function primeAudioContext() {
+  try {
+    if (window.AudioContext || window.webkitAudioContext) {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      // create and immediately close a tiny oscillator to unlock audio
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.connect(g);
+      g.connect(ctx.destination);
+      g.gain.setValueAtTime(0, ctx.currentTime);
+      o.start();
+      o.stop();
+      ctx.close();
+    }
+  } catch (e) {
+    // ignore – this is just a best-effort unlock
+  }
+  window.removeEventListener('pointerdown', primeAudioContext);
+  window.removeEventListener('touchstart', primeAudioContext);
+}
+window.addEventListener('pointerdown', primeAudioContext, { once: true });
+window.addEventListener('touchstart', primeAudioContext, { once: true });
+
+// initialize
 loadTrack(0);
+if (dropdown) dropdown.value = 0;
+if (playBtn) playBtn.textContent = '▶️';
