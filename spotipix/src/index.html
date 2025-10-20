@@ -3,78 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cozy KPop Instrumental Player</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Bubblegum+Sans&display=swap" rel="stylesheet">
-
+  <title>SpotiPix — Lofi Music Widget</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="shell">
-    <div class="screen">
-      <div class="screen-inner">
-        <div class="info-left">
-          <img id="cover" class="cover" src="assets/default-cover.gif" alt="cover">
-        </div>
-        <div class="info-right">
-          <div class="track-meta">
-            <div id="title" class="title">Loading…</div>
-            <div id="artist" class="artist">—</div>
-          </div>
-
-          <div class="time-row">
-            <div id="currentTime">0:00</div>
-            <div id="duration">0:00</div>
-          </div>
-
-          <div class="progress-wrap">
-            <div id="progressBar" class="progress-bar">
-              <div id="progressFill" class="progress-fill"></div>
-              <div id="progressThumb" class="thumb" draggable="false"></div>
-            </div>
-          </div>
-
-          <div class="controls-row small">
-            <button id="toggleWave" class="small-btn">Waveform</button>
-            <div class="hearts-inline">
-              <button class="heart small-btn" data-vol="0.3">💗</button>
-              <button class="heart small-btn" data-vol="0.6">💝</button>
-              <button class="heart small-btn" data-vol="0.9">💖</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="menuScreen" class="menu-screen hidden">
-        <ul id="menuList"></ul>
-      </div>
-
-      <!-- Waveform (hidden by default) -->
-      <div id="waveContainer" class="wave-container hidden">
-        <canvas id="waveform"></canvas>
-      </div>
+  <div class="player-shell">
+    <div class="left-panel">
+      <img id="cover" class="album-cover" src="assets/default-cover.gif" alt="Cover Art">
     </div>
 
-    <!-- Click Wheel -->
-    <div class="wheel-wrap">
-      <div class="wheel">
-        <div class="wheel-top">MUSIC</div>
+    <div class="right-panel">
+      <select id="menuList" class="dropdown"></select>
 
-        <button id="prev" class="wheel-btn left">◀</button>
-        <button id="next" class="wheel-btn right">▶</button>
-
-        <button id="play" class="wheel-center">▶️</button>
-
-        <div class="wheel-bottom">
-          <button id="menu" class="menu-btn">MENU</button>
+      <div class="wheel-wrap">
+        <div class="wheel">
+          <button id="prev" class="wheel-btn left">⏮️</button>
+          <button id="play" class="wheel-center">▶️</button>
+          <button id="next" class="wheel-btn right">⏭️</button>
         </div>
       </div>
-    </div>
 
-    <audio id="audio" preload="metadata"></audio>
+      <div class="track-meta">
+        <h3 id="title">Loading...</h3>
+        <p id="artist">—</p>
+      </div>
+
+      <div class="progress-wrap">
+        <span id="currentTime">0:00</span>
+        <div id="progressBar" class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <span id="duration">0:00</span>
+      </div>
+    </div>
   </div>
 
+  <audio id="audio" preload="metadata"></audio>
   <script src="main.js"></script>
 </body>
 </html>
