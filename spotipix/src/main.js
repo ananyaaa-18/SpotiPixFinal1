@@ -20,26 +20,26 @@ tracks = [
   { name: "Touch", artist: "Katseye ft. Yeonjun", src: "assets/touch/Touch.mp3", image: "assets/touch/katseye.jpg" },
   { name: "Supernatural", artist: "Ariana Grande", src: "assets/Supernatural/supernatural.mp3", image: "assets/Supernatural/ariana.jpg" },
   { name: "Party 4 u", artist: "Charli xcx", src: "assets/party4u/party4usong.mp3", image: "assets/party4u/charli.jpg" },
-  { name: "Eyes Closed", artist: "Jisoo & Zayn", src: "assets/eyes closed/eyes-closed.mp3", image: "assets/eyes closed/jisoo-zayn.jpg"},
+  { name: "Eyes Closed", artist: "Jisoo & Zayn", src: "assets/eyes_closed/eyes-closed.mp3", image: "assets/eyes_closed/jisoo-zayn.jpg"},
   { name: "Blue", artist: "Yung Kai", src: "assets/blue/Blue-Yung-Kai.mp3", image: "assets/blue/yung kai.jpg"},
-  { name: "About You", artist: "The 1975", src: "assets/About You/about-you.mp3", image: "assets/About You/1975.jpg"},
-  { name: "2 hands", artist: "Tate Mcrae", src: "assets/2 hands/tate-mcrae-2-hands.mp3", image: "assets/2 hands/tate.jpg"},
+  { name: "About You", artist: "The 1975", src: "assets/About_You/about-you.mp3", image: "assets/About_You/1975.jpg"},
+  { name: "2 hands", artist: "Tate Mcrae", src: "assets/2_hands/tate-mcrae-2-hands.mp3", image: "assets/2_hands/tate.jpg"},
   { name: "If I Say, I Love You", artist: "Boynextdoor", src: "assets/if I say I love you/if-i-say-i-love-u.mp3", image: "assets/if I say I love you/boynextdoor.jpg"},
-  { name: "Kiss Kiss", artist: "MGK", src: "assets/kiss kiss/kiss-kiss.mp3", image: "assets/kiss kiss/mgk.jpg"},
+  { name: "Kiss Kiss", artist: "MGK", src: "assets/kiss_kiss/kiss-kiss.mp3", image: "assets/kiss_kiss/mgk.jpg"},
   { name: "GO!", artist: "Cortis", src: "assets/GO!/GO!.mp3", image: "assets/GO!/cortis.jpg"},
   { name: "luther", artist: "Kendrick & Sza", src: "assets/luther/luthersong.mp3", image: "assets/luther/sza&kendrick.jpg"},
-  { name: "playboy shit", artist: "Blackbear ft. Lil Aaron", src: "assets/playboy shit/playboy-shit.mp3", image: "assets/playboy shit/blackbearr.jpg"},
-  { name: "I Love You, I'm Sorry", artist: "Gracie Abrams", src: "assets/i love you im sorry/ilyis.mp3", image: "assets/i love you im sorry/gracie.jpg"},
+  { name: "playboy shit", artist: "Blackbear ft. Lil Aaron", src: "assets/playboy_shit/playboy-shit.mp3", image: "assets/playboy_shit/blackbearr.jpg"},
+  { name: "I Love You, I'm Sorry", artist: "Gracie Abrams", src: "assets/i_love_you_im_sorry/ilyis.mp3", image: "assets/i_love_you_im_sorry/gracie.jpg"},
   { name: "Jellyous", artist: "ILLIT", src: "assets/jellyous/jellyous.mp3", image: "assets/jellyous/illit.jpg"},
-  { name: "Fall In Love Again", artist: "P1harmony", src: "assets/fall in love again/fall-in-love-again.mp3", image: "assets/fall in love again/p1h.jpg"},
-  { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/I think i like u better when youre gone/i-think-i-like-u-better.mp3", image: "assets/I think i like u better when youre gone/reneee.jpg"},
+  { name: "Fall In Love Again", artist: "P1harmony", src: "assets/fall_in_love_again/fall-in-love-again.mp3", image: "assets/fall_in_love_again/p1h.jpg"},
+  { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/I_think_i_like_u_better_when_youre_gone/i-think-i-like-u-better.mp3", image: "assets/I_think_i_like_u_better_when_youre_gone/reneee.jpg"},
   { name: "Soda Pop", artist: "Saja Boys", src: "assets/soda/soda-pop.mp3", image: "assets/soda/saja.jpg"  },
   { name: "Welcome To New York", artist: "Taylor Swift", src: "assets/wlcm/wlcmtoNYC.mp3", image: "assets/wlcm/Taylor Swift-Welcome To New York.mp3"},
   { name: "Golden", artist: "HUNTR/X", src: "assets/golden/Golden.mp3", image: "assets/golden/huntrix.jpg"},
   { name: "So American", artist: "Olivia Rodrigo", src: "assets/american/so-american.mp3", image: "assets/american/olivia.jpg"},
   { name: "Emails I Can't Send", artist: "Sabrina Carpenter", src:"assets/emails/emails-i-can't-send.mp3", image:"assets/emails/sabrina.jpg"},
   { name: "Hurt", artist: "NewJeans / NJZ", src: "assets/hurt/Hurt.mp3", image: "assets/hurt/njz.jpg"},
-  { name: "Never Goodbye", artist: "NCT Dream", src: "assets/never goodbye/never-goodbye.mp3", image: "assets/never goobye/nct.jpg"},
+  { name: "Never Goodbye", artist: "NCT Dream", src: "assets/never_goodbye/never-goodbye.mp3", image: "assets/never_goodbye/nct.jpg"},
   { name: "DARARI", artist: "Treasure", src: "assets/darari/DARARI.mp3", image: "assets/darari/treasure.jpg"}
 ];
 
@@ -114,14 +114,21 @@ async function safePlay() {
 async function togglePlay() {
   if (!audio) return;
   if (!audio.src) loadTrack(currentIndex || 0);
+
   if (isPlaying) {
     audio.pause();
     isPlaying = false;
-    if (playBtn) playBtn.textContent = '▶️';
+    playBtn.textContent = '▶️';
   } else {
-    await safePlay();
+    // explicitly unlock audio first
+    await primeAudioContext();
+    const played = await safePlay();
+    if (!played) {
+      console.warn('User gesture needed for playback');
+    }
   }
 }
+
 
 // next / prev functions
 async function nextTrack() {
@@ -187,12 +194,12 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Prime AudioContext on first user gesture to reduce chance of blocked play
-function primeAudioContext() {
+
+
+async function primeAudioContext() {
   try {
     if (window.AudioContext || window.webkitAudioContext) {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      // create and immediately close a tiny oscillator to unlock audio
       const o = ctx.createOscillator();
       const g = ctx.createGain();
       o.connect(g);
@@ -200,16 +207,16 @@ function primeAudioContext() {
       g.gain.setValueAtTime(0, ctx.currentTime);
       o.start();
       o.stop();
-      ctx.close();
+      await ctx.close();
     }
   } catch (e) {
-    // ignore – this is just a best-effort unlock
+    console.warn('Audio unlock failed', e);
   }
-  window.removeEventListener('pointerdown', primeAudioContext);
-  window.removeEventListener('touchstart', primeAudioContext);
 }
+
 window.addEventListener('pointerdown', primeAudioContext, { once: true });
 window.addEventListener('touchstart', primeAudioContext, { once: true });
+
 
 // initialize
 loadTrack(0);
