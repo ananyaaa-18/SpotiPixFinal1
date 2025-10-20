@@ -47,7 +47,11 @@ tracks = [
 let currentIndex = 0;
 let isPlaying = false;
 
-// populate dropdown safely
+function playClick() {
+  clickSound.currentTime = 0;
+  clickSound.play().catch(() => {});
+}
+
 if (dropdown) {
   tracks.forEach((t, i) => {
     const opt = document.createElement('option');
@@ -59,7 +63,6 @@ if (dropdown) {
   console.warn('Dropdown menu element not found; skipping population');
 }
 
-// helper: format mm:ss
 function fmtTime(sec) {
   if (!sec || isNaN(sec)) return '0:00';
   const m = Math.floor(sec / 60);
@@ -67,7 +70,6 @@ function fmtTime(sec) {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-// Load a track index and update UI (no play)
 function loadTrack(i) {
   if (!tracks || !tracks.length) {
     console.warn('No tracks available');
@@ -79,17 +81,14 @@ function loadTrack(i) {
   artistEl && (artistEl.textContent = t.artist || '');
   coverEl && (coverEl.src = t.image || 'assets/default-cover.gif');
 
-  // set audio src and ensure metadata loads
   if (audio) {
     audio.src = t.src || '';
     try { audio.load(); } catch (e) { console.warn('audio.load() error', e); }
   }
 
-  // sync dropdown
   if (dropdown) dropdown.value = currentIndex;
 }
 
-// Safe play helper with promise handling (autoplay policy)
 async function safePlay() {
   if (!audio) return false;
   if (!audio.src) {
@@ -110,7 +109,6 @@ async function safePlay() {
   }
 }
 
-// toggle play/pause
 async function togglePlay() {
   if (!audio) return;
   if (!audio.src) loadTrack(currentIndex || 0);
@@ -120,7 +118,6 @@ async function togglePlay() {
     isPlaying = false;
     playBtn.textContent = '▶️';
   } else {
-    // explicitly unlock audio first
     await primeAudioContext();
     const played = await safePlay();
     if (!played) {
@@ -130,7 +127,6 @@ async function togglePlay() {
 }
 
 
-// next / prev functions
 async function nextTrack() {
   loadTrack((currentIndex + 1) % tracks.length);
   if (isPlaying) await safePlay();
@@ -140,7 +136,6 @@ async function prevTrack() {
   if (isPlaying) await safePlay();
 }
 
-// dropdown change
 if (dropdown) {
   dropdown.addEventListener('change', async (e) => {
     const val = parseInt(e.target.value, 10);
@@ -151,7 +146,6 @@ if (dropdown) {
   });
 }
 
-// progress updates
 if (audio) {
   audio.addEventListener('timeupdate', () => {
     if (!audio.duration || isNaN(audio.duration)) return;
@@ -162,12 +156,10 @@ if (audio) {
   });
 
   audio.addEventListener('ended', () => {
-    // automatically advance
     nextTrack();
   });
 
   audio.addEventListener('loadedmetadata', () => {
-    // Update duration right away
     if (durationEl && audio.duration) durationEl.textContent = fmtTime(audio.duration);
   });
 
@@ -177,12 +169,10 @@ if (audio) {
   });
 }
 
-// UI listeners (guarded)
 if (playBtn) playBtn.addEventListener('click', togglePlay);
 if (nextBtn) nextBtn.addEventListener('click', nextTrack);
 if (prevBtn) prevBtn.addEventListener('click', prevTrack);
 
-// keyboard shortcuts (optional — space toggles)
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
     e.preventDefault();
@@ -218,7 +208,6 @@ window.addEventListener('pointerdown', primeAudioContext, { once: true });
 window.addEventListener('touchstart', primeAudioContext, { once: true });
 
 
-// initialize
 loadTrack(0);
 if (dropdown) dropdown.value = 0;
 if (playBtn) playBtn.textContent = '▶️';

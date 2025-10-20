@@ -4,25 +4,19 @@
 
 /*CSS Color Variables*/
 :root {
-  --navy: #2F4156;
   --sky-blue: #C8D9E6;
   --beige: #F5EFEB;
   --azalea:#F7C9DA;
   --pale-pink: #FFE1E6;
   --light-blue: #C3E7F1;
-  --moonstone: #519CAB;
-  --saffron: #FFC64F;
   --gun-metal: #20373B;
   --lavender: #DABBE0;
   --soft-sky: #BED1E3;
   --flamingo: #EEBFD1;
   --mauve: #ECAAC2;
-  --denim: #93AECA;
   --lavender-blush: #FFE6ED;
   --blush: #CF7486;
-  --red: #E63946;
-  --yellow: #FFE21C;
-  --bg-gradient: linear-gradient(135deg, #c6def1, #f9d8d6, #fde2e4);
+  --bg-gradient: linear-gradient(135deg, var(--light-blue),var(--azalea), var(--lavender-blush), var(--pale-pink), var(--mauve));
   --shadow-light: rgba(255,255,255,0.8);
   --shadow-dark: rgba(0,0,0,0.1);
   --accent: #f4a6b0;
