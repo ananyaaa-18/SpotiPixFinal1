@@ -109,22 +109,20 @@ async function safePlay() {
   }
 }
 
-async function togglePlay() {
-  if (!audio) return;
-  if (!audio.src) loadTrack(currentIndex || 0);
+function togglePlay() {
+  playClick();
+  const wheel = document.querySelector('.wheel');
 
   if (isPlaying) {
     audio.pause();
     isPlaying = false;
-    playBtn.textContent = '▶️';
+    wheel.classList.remove('playing');
   } else {
-    await primeAudioContext();
-    const played = await safePlay();
-    if (!played) {
-      console.warn('User gesture needed for playback');
-    }
+    safePlay();
+    wheel.classList.add('playing');
   }
 }
+
 
 
 async function nextTrack() {
@@ -208,6 +206,7 @@ window.addEventListener('pointerdown', primeAudioContext, { once: true });
 window.addEventListener('touchstart', primeAudioContext, { once: true });
 
 
+// initialize
 loadTrack(0);
 if (dropdown) dropdown.value = 0;
 if (playBtn) playBtn.textContent = '▶️';
