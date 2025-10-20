@@ -11,8 +11,8 @@
     "windows": [
       {
         "title": "spotipix",
-        "width": 50000,
-        "height": 900
+        "width": 900,
+        "height": 500
       }
     ],
     "security": {
