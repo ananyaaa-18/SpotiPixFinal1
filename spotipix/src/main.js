@@ -161,30 +161,6 @@ if (audio) {
     if (durationEl) durationEl.textContent = fmtTime(audio.duration);
   });
 
-const progressBar = document.querySelector('.progress-bar');
-
-progressBar.addEventListener('click', (e) => {
-  if (!audio.duration) return;
-  const rect = progressBar.getBoundingClientRect();
-  const offsetX = e.clientX - rect.left;
-  const percent = offsetX / rect.width;
-  audio.currentTime = percent * audio.duration;
-});
-
-let isScrubbing = false;
-
-progressBar.addEventListener('mousedown', (e) => {
-  isScrubbing = true;
-});
-window.addEventListener('mouseup', () => isScrubbing = false);
-window.addEventListener('mousemove', (e) => {
-  if (!isScrubbing || !audio.duration) return;
-  const rect = progressBar.getBoundingClientRect();
-  const percent = Math.min(Math.max(0, (e.clientX - rect.left) / rect.width), 1);
-  audio.currentTime = percent * audio.duration;
-});
-
-
   audio.addEventListener('ended', () => {
     // automatically advance
     nextTrack();

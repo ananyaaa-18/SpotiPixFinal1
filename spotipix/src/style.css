@@ -110,6 +110,7 @@ body {
   height: 70px;
   border-radius: 50%;
   border: none;
+  background: linear-gradient(180deg,#fefefe,#f2f3f6);
   box-shadow: 0 6px 12px rgba(0,0,0,0.1);
   font-size: 20px;
   cursor: pointer;
@@ -117,9 +118,11 @@ body {
 
 .wheel-btn {
   position: absolute;
+  background: none;
   border: none;
   font-size: 20px;
   cursor: pointer;
+  color: var(--text-main);
 }
 .wheel-btn.left { left: 25px; top: 50%; transform: translateY(-50%); }
 .wheel-btn.right { right: 25px; top: 50%; transform: translateY(-50%); }
