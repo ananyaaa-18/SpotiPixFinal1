@@ -32,7 +32,7 @@ tracks = [
   { name: "I Love You, I'm Sorry", artist: "Gracie Abrams", src: "assets/i_love_you_im_sorry/ilyis.mp3", image: "assets/i_love_you_im_sorry/gracie.jpg"},
   { name: "Jellyous", artist: "ILLIT", src: "assets/jellyous/jellyous.mp3", image: "assets/jellyous/illit.jpg"},
   { name: "Fall In Love Again", artist: "P1harmony", src: "assets/fall_in_love_again/fall-in-love-again.mp3", image: "assets/fall_in_love_again/p1h.jpg"},
-  { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/I_think_i_like_u_better_when_youre_gone/i-think-i-like-u-better.mp3", image: "assets/I_think_i_like_ u_better_when_youre_gone/reneee.jpg"},
+  { name: "I Think I Like You Better When You're Gone", artist: "Reneé Rapp", src: "assets/better-gone/i_think_i_like_you_bette.mp3", image: "assets/better-gone/reneee.jpg"},
   { name: "Soda Pop", artist: "Saja Boys", src: "assets/soda/soda-pop.mp3", image: "assets/soda/saja.jpg"  },
   { name: "Welcome To New York", artist: "Taylor Swift", src: "assets/wlcm/wlcmtoNYC.mp3", image: "assets/wlcm/taylor.jpg"},
   { name: "Golden", artist: "HUNTR/X", src: "assets/golden/Golden.mp3", image: "assets/golden/huntrix.jpg"},
