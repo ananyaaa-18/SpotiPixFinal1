@@ -65,7 +65,6 @@ body {
   cursor: pointer;
 }
 
-/* Wheel setup */
 .wheel-wrap {
   width: 220px;
   display: flex;
@@ -91,7 +90,6 @@ body {
   transform: rotate(25deg);
 }
 
-/* Button base styles */
 .wheel-btn, .wheel-center {
   background-color: transparent;
   background-repeat: no-repeat;
@@ -107,7 +105,6 @@ body {
   opacity: 0.9;
 }
 
-/* Control button images */
 #prev {
   background-image: url("assets/prev.png");
   width: 50px;
@@ -140,7 +137,6 @@ body {
   background-image: url("assets/pause.png");
 }
 
-/* Text + Progress */
 .track-meta h3 {
   margin: 0;
   color: var(--text-main);

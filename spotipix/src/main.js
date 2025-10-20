@@ -15,7 +15,7 @@ const wheel = document.querySelector('.wheel');
 
 let currentIndex = 0;
 let isPlaying = false;
-let isDragging = false; // for progress drag tracking
+let isDragging = false; 
 
 tracks = [
   { name: "Touch", artist: "Katseye ft. Yeonjun", src: "assets/touch/Touch.mp3", image: "assets/touch/katseye.jpg" },
@@ -103,7 +103,6 @@ function prevTrack() {
   if (isPlaying) safePlay();
 }
 
-// Populate dropdown
 tracks.forEach((t, i) => {
   const opt = document.createElement('option');
   opt.value = i;
@@ -119,7 +118,6 @@ dropdown.addEventListener('change', e => {
   }
 });
 
-// Progress update
 audio.addEventListener('timeupdate', () => {
   if (!audio.duration || isDragging) return;
   const pct = (audio.currentTime / audio.duration) * 100;
@@ -130,7 +128,6 @@ audio.addEventListener('timeupdate', () => {
 
 audio.addEventListener('ended', nextTrack);
 
-// --- SEEKING / DRAGGING LOGIC ---
 function seekTo(e) {
   const rect = progressBar.getBoundingClientRect();
   const clickX = e.clientX - rect.left;
@@ -157,7 +154,6 @@ window.addEventListener('mouseup', () => {
   }
 });
 
-// Controls
 playBtn.addEventListener('click', togglePlay);
 nextBtn.addEventListener('click', nextTrack);
 prevBtn.addEventListener('click', prevTrack);
