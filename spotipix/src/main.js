@@ -24,7 +24,7 @@ tracks = [
   { name: "Blue", artist: "Yung Kai", src: "assets/blue/Blue-Yung-Kai.mp3", image: "assets/blue/yung-kai.jpg"},
   { name: "About You", artist: "The 1975", src: "assets/About_You/about-you.mp3", image: "assets/About_You/1975.jpg"},
   { name: "2 hands", artist: "Tate Mcrae", src: "assets/2_hands/tate-mcrae-2-hands.mp3", image: "assets/2_hands/tate.jpg"},
-  { name: "If I Say, I Love You", artist: "Boynextdoor", src: "assets/if_I_say_I_love_you/ifisayiloveyou", image: "assets/if_I_say_I_love_you/boynextdoor.jpg"},
+  { name: "If I Say, I Love You", artist: "Boynextdoor", src: "assets/if_I_say_I_love_you/ifisayiloveyou.mp3", image: "assets/if_I_say_I_love_you/boynextdoor.jpg"},
   { name: "Kiss Kiss", artist: "MGK", src: "assets/kiss_kiss/kiss-kiss.mp3", image: "assets/kiss_kiss/mgk.jpg"},
   { name: "GO!", artist: "Cortis", src: "assets/GO!/GO!.mp3", image: "assets/GO!/cortis.jpg"},
   { name: "luther", artist: "Kendrick & Sza", src: "assets/luther/luthersong.mp3", image: "assets/luther/sza&kendrick.jpg"},
